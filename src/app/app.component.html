@@ -10,11 +10,16 @@
   <mat-grid-tile
       [colspan]="4"
       [rowspan]="6"
-      [style.background]="'#424242'">
-    @if (writing) {
-      <img width="20" src="https://www.gstatic.com/lamda/images/sparkle_resting_v2_darkmode_2bdb7df2724e450073ede.gif" />
+      [style.background]="'#424242b3'">
+
+    <mat-list role="list">
+    @for(results of questions; track results.prompt) {
+      <mat-list-item lines="10">
+        <span matListItemTitle>{{ results.prompt }}</span>
+        <span>{{ results.result }}</span>
+      </mat-list-item>
     }
-    <p>{{result}}</p>
+    </mat-list>
   </mat-grid-tile>
 
 
@@ -33,12 +38,10 @@
     [colspan]="1"
     [rowspan]="1"
   >
-      <button mat-raised-button color="primary" (click)="generate()">Send</button>
-
+      <button mat-icon-button color="primary" aria-label="send" (click)="generate()" [disabled]="writing">
+        <mat-icon>send</mat-icon>
+      </button>
   </mat-grid-tile>
-
-
-
 
 </mat-grid-list>
 

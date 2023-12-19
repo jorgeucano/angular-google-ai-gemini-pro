@@ -12,3 +12,11 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   color: white;
 }
+
+span {
+  white-space: initial;
+}
+
+mat-grid-tile-content, mat-list, mat-list-item {
+  width: 100%;
+}

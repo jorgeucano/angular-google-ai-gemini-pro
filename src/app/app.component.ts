@@ -7,15 +7,19 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule, FormsModule,
-    RouterOutlet, MatInputModule,
-    MatButtonModule, MatGridListModule],
+    CommonModule, FormsModule, MatDividerModule, MatCardModule,
+    RouterOutlet, MatInputModule, MatIconModule,
+    MatButtonModule, MatGridListModule, MatListModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -25,6 +29,8 @@ export class AppComponent {
   prompt = '';
   writing = false;
 
+  questions: Array<{ prompt: string; result: string }> = [];
+
   constructor(private googleGeminiPro: GoogleGeminiProService) {
     this.googleGeminiPro.initialize(key);
   }
@@ -32,12 +38,12 @@ export class AppComponent {
   async generate() {
     this.writing = true;
     const result = await this.googleGeminiPro.generateText(this.prompt);
-    console.log(result);
+    this.questions.push({ prompt: this.prompt, result: '' });
     this.write(result, 0);
   }
 
   write(result: string, index: number) {
-    this.result = result.slice(0, index);
+    this.questions[this.questions.length - 1].result = result.slice(0, index);
     if (index < result.length) {
       setTimeout(() => {
         this.write(result, index + 1)
@@ -45,13 +51,12 @@ export class AppComponent {
     }
     else {
       this.writing = false;
-      console.log('done');
+      this.prompt = '';
     }
   }
 
   randomVelocity(): number {
-    const velocity = Math.floor(Math.random() * (100 - 1 + 1) + 1);
-    console.log(velocity);
+    const velocity = Math.floor(Math.random() * (50 - 1 + 1) + 1);
     return velocity;
   }
 
