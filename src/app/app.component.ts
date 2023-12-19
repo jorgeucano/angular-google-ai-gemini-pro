@@ -21,16 +21,38 @@ import { MatGridListModule } from '@angular/material/grid-list';
 })
 export class AppComponent {
 
-  title = 'ng-gemini-test';
   result = '';
   prompt = '';
+  writing = false;
 
   constructor(private googleGeminiPro: GoogleGeminiProService) {
     this.googleGeminiPro.initialize(key);
   }
 
   async generate() {
-    this.result = await this.googleGeminiPro.generateText(this.prompt);
+    this.writing = true;
+    const result = await this.googleGeminiPro.generateText(this.prompt);
+    console.log(result);
+    this.write(result, 0);
+  }
+
+  write(result: string, index: number) {
+    this.result = result.slice(0, index);
+    if (index < result.length) {
+      setTimeout(() => {
+        this.write(result, index + 1)
+      }, this.randomVelocity());
+    }
+    else {
+      this.writing = false;
+      console.log('done');
+    }
+  }
+
+  randomVelocity(): number {
+    const velocity = Math.floor(Math.random() * (100 - 1 + 1) + 1);
+    console.log(velocity);
+    return velocity;
   }
 
 }

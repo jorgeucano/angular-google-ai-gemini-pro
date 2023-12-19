@@ -25,10 +25,16 @@ export class GoogleGeminiProService {
       return;
     }
 
-    const result = await this.model.generateContent(prompt);
-    const response = await result.response;
+    try {
+      const result = await this.model.generateContent(prompt);
+      const response = await result.response;
 
-    return response.text();
+      return response.text();
+    }
+    catch (e) {
+      console.error(e);
+      return 'Hey, sorry this is an error, check the console or retry';
+    }
 
   }
 
