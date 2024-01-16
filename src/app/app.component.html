@@ -1,49 +1,15 @@
-<mat-grid-list cols="4" rowHeight="100px">
-  <mat-grid-tile
-      [colspan]="4"
-      [rowspan]="1"
-      [style.background]="'#9c27b0'">
-      <img height="100%" src="./assets/angular_black.png" />
-      <h1>NG-Bard</h1>
-  </mat-grid-tile>
-
-  <mat-grid-tile
-      [colspan]="4"
-      [rowspan]="6"
-      [style.background]="'#424242b3'">
-
-    <mat-list role="list">
+<div class="wrapper">
+  <header class="header">
+    <img height="100" src="./assets/agemini.gif" />
+  </header>
+  <article class="main" #scrollframe>
     @for(results of questions; track results.prompt) {
-      <mat-list-item lines="10">
-        <span matListItemTitle>{{ results.prompt }}</span>
-        <span>{{ results.result }}</span>
-      </mat-list-item>
+      <h3>{{ results.prompt }}</h3>
+      <span>{{ results.result }}</span>
     }
-    </mat-list>
-  </mat-grid-tile>
-
-
-  <mat-grid-tile
-    [colspan]="3"
-    [rowspan]="1"
-  >
-    <mat-form-field class="example-full-width">
-    <mat-label>Message to ng-bard</mat-label>
+  </article>
+  <footer class="footer">
     <textarea [(ngModel)]="prompt" matInput placeholder="Ex. Create a history about an angular developer..."></textarea>
-  </mat-form-field>
-
-  </mat-grid-tile>
-
-  <mat-grid-tile
-    [colspan]="1"
-    [rowspan]="1"
-  >
-      <button mat-icon-button color="primary" aria-label="send" (click)="generate()" [disabled]="writing">
-        <mat-icon>send</mat-icon>
-      </button>
-  </mat-grid-tile>
-
-</mat-grid-list>
-
-
-
+    <button color="primary" aria-label="send" (click)="generate()" [disabled]="writing">send</button>
+  </footer>
+</div>

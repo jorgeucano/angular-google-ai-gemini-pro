@@ -1,29 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { key } from '../key';
 import { GoogleGeminiProService } from './services/google-gemini-pro.service';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule, FormsModule, MatDividerModule, MatCardModule,
-    RouterOutlet, MatInputModule, MatIconModule,
-    MatButtonModule, MatGridListModule, MatListModule],
+    CommonModule, FormsModule, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+
+  @ViewChild('scrollframe') scrollframe?: ElementRef;
+  scroll() {
+    const maxScroll = this.scrollframe?.nativeElement.scrollHeight;
+    this.scrollframe?.nativeElement.scrollTo({ top: maxScroll, behavior: 'smooth' });
+  }
 
   result = '';
   prompt = '';
@@ -46,7 +43,8 @@ export class AppComponent {
     this.questions[this.questions.length - 1].result = result.slice(0, index);
     if (index < result.length) {
       setTimeout(() => {
-        this.write(result, index + 1)
+        this.scroll();
+        this.write(result, index + 1);        
       }, this.randomVelocity());
     }
     else {
@@ -56,7 +54,7 @@ export class AppComponent {
   }
 
   randomVelocity(): number {
-    const velocity = Math.floor(Math.random() * (50 - 1 + 1) + 1);
+    const velocity = Math.floor(Math.random() * 25 + 1);
     return velocity;
   }
 
