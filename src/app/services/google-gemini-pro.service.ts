@@ -33,7 +33,7 @@ export class GoogleGeminiProService {
     }
     catch (e) {
       console.error(e);
-      return `Hey sorry, I'm an error, check the console or retry.`;
+      return `Hey sorry, I'm an error, check the console.`;
     }
 
   }

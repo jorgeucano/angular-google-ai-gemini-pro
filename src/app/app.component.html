@@ -10,6 +10,10 @@
   </article>
   <footer class="footer">
     <textarea [(ngModel)]="prompt" matInput placeholder="Ex. Create a history about an angular developer..."></textarea>
-    <button color="primary" aria-label="send" (click)="generate()" [disabled]="writing">send</button>
+    @if(!writing) {
+      <button color="primary" aria-label="send" (click)="generate()" [disabled]="writing">send</button>
+    } @else {
+      <div class="loader"></div>
+    }
   </footer>
 </div>
